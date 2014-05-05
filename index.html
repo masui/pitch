@@ -8,7 +8,8 @@
 <script language="JavaScript" src="timbre.js"></script>
 <script type="text/javascript">
   $(function(){
-    osc = T("osc", wave="sin", freq=300, mul=1, add=0);
+    //osc = T("osc", wave="sin", freq=300, mul=1, add=0);
+    osc = T("sin",{freq:300});
     osc.play();
 
     // Slider
