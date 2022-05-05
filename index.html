@@ -11,22 +11,23 @@
     var oscillator;
 
     function start(){
-      if(!started){
-        const ctx = new AudioContext();
-        oscillator = ctx.createOscillator();
-        oscillator.connect(ctx.destination);
-        oscillator.start();
-	started = true;
-      }
+      const ctx = new AudioContext();
+      oscillator = ctx.createOscillator();
+      oscillator.connect(ctx.destination);
+      oscillator.start();
     }
     
     $(function(){
+      let freq = 200 + Math.random() * 1000
       $("#freqslider").slider({
-        value: 300,
+        value: freq,
         min: 50,
         max: 1200,
         slide: function(event, ui) {
-	  start()
+	  if(!started){
+            start()
+	    started = true
+	  }
 	  freq = ui.value
           $("#freq").val(freq + "Hz");
 	  oscillator.frequency.value = freq;
@@ -38,7 +39,10 @@
 <body>
 </head>
 <body>
-目を閉じて440Hzをだしてみよう!
+<ul>
+  <li>スライダを動かすと音が出ます</li>
+  <li>目を閉じて440Hzをだしてみよう!</li>
+</ul>  
 
 <p>
   <label for="freq">Freq:</label>
