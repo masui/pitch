@@ -5,26 +5,34 @@
 <link type="text/css" href="jquery-ui-1.8.21.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="jquery-ui-1.8.21.custom.min.js"></script>
-<script language="JavaScript" src="timbre.js"></script>
-<script type="text/javascript">
-  $(function(){
-    //osc = T("osc", wave="sin", freq=300, mul=1, add=0);
-    osc = T("sin",{freq:300});
-    osc.play();
 
-    // Slider
-    $("#freqslider").slider({
-      value: 300,
-      min: 50,
-      max: 1200,
-      slide: function(event, ui) {
-        freq = ui.value
-        $("#freq").val(freq + "Hz");
-        osc.freq.value = freq;
+  <script>
+    var started = false;
+    var oscillator;
+
+    function start(){
+      if(!started){
+        const ctx = new AudioContext();
+        oscillator = ctx.createOscillator();
+        oscillator.connect(ctx.destination);
+        oscillator.start();
+	started = true;
       }
-    });
-    $("#freq").val($("#freqslider").slider("value"));
-  });
+    }
+    
+    $(function(){
+      $("#freqslider").slider({
+        value: 300,
+        min: 50,
+        max: 1200,
+        slide: function(event, ui) {
+	  start()
+	  freq = ui.value
+          $("#freq").val(freq + "Hz");
+	  oscillator.frequency.value = freq;
+       }
+      })
+    })
   </script>
 </head>
 <body>
@@ -41,5 +49,4 @@
 
 </body>
 </html>
-
 
